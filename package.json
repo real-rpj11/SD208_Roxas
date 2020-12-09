@@ -1,0 +1,26 @@
+{
+  "name": "sd208_roxas",
+  "version": "1.0.0",
+  "description": "Login/Registration Form with node js and mongodb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/real-rpj11/SD208_Roxas.git"
+  },
+  "author": "Roxas, Precy Jane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/real-rpj11/SD208_Roxas/issues"
+  },
+  "homepage": "https://github.com/real-rpj11/SD208_Roxas#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.5",
+    "nodemon": "^2.0.6"
+  }
+}
