@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "nodemon app.js"
-
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,7 @@
   },
   "homepage": "https://github.com/real-rpj11/SD208_Roxas#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "mongoose": "^5.11.6",
