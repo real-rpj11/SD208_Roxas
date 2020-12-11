@@ -1,10 +1,19 @@
+if(process.env.NODE_ENV !== "produnction"){
+    require('dotenv').config()
+}
+
 const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt')
-const { get } = require('mongoose')
-// const bodyParser = require('body-parser')
+const passport =require('passport')
 const PORT = process.env.PORT || 4000
-// const router = require('./routes/userRoute')
+const flash = require('express-flash')
+const session = require('express-session')
+
+const initializePassport = require('./passportConfig')
+initializePassport(passport, email => users.find(user => user.email === email))
+
+
 const users = []
 
 // middleware
@@ -12,10 +21,20 @@ const users = []
 app.use(express.urlencoded({extended: false}));
 app.set("view engine", "ejs")
 app.use(express.static(__dirname+"/public"))
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized : false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 app.get('/', (req, res) =>{
     res.render('index')
 })
+
 
 app.post('/register', async (req, res) =>{
     try {
@@ -33,9 +52,10 @@ app.post('/register', async (req, res) =>{
     console.log(users);
 })
 
-app.get('/login', async (req, res) =>{
-    
-})
+app.post('/login', passport.authenticate('local',{
+    successRedirect: '/',
+    failureFlash: "failed"
+}))
 
 
 app.listen(PORT,() =>{

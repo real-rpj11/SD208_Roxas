@@ -24,7 +24,10 @@
         <div class="login slide-up">
             <div class="center">
                 <h2 class="form-title" id="login"><span>or</span>Log in</h2>
-                <form action="" method="get">
+                <% if(messages.error){ %>
+                    <% messages.error %>
+                <% } %>
+                <form action="/login" method="POST">
                     <div class="form-holder">
                         <input type="email" class="input" placeholder="Email" name="email" />
                         <input type="password" class="input" placeholder="Password" name="password" />
