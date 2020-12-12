@@ -11,13 +11,16 @@ const flash = require('express-flash')
 const session = require('express-session')
 
 const initializePassport = require('./passportConfig')
-initializePassport(passport, email => users.find(user => user.email === email))
+initializePassport(
+    passport, 
+    email => users.find(user => user.email === email),
+    id =>  users.find(user => user.id === id)
+    )
 
-
+// temporary storage
 const users = []
 
 // middleware
-// app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.set("view engine", "ejs")
 app.use(express.static(__dirname+"/public"))
@@ -30,8 +33,11 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.get('/',(req, res) =>{
+    res.render('main', {username: req.user.username, email: req.user.email})
+})
 
-app.get('/', (req, res) =>{
+app.get('/index', (req, res) =>{
     res.render('index')
 })
 
@@ -45,7 +51,7 @@ app.post('/register', async (req, res) =>{
             email: req.body.email,
             password: hashedpassword
         })
-        res.redirect('/')
+        res.redirect('/index')
     } catch (error) {
         console.log(error)
     }
@@ -54,7 +60,8 @@ app.post('/register', async (req, res) =>{
 
 app.post('/login', passport.authenticate('local',{
     successRedirect: '/',
-    failureFlash: "failed"
+    failureRedirect: '/index',
+    failureFlash: true
 }))
 
 
